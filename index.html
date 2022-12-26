@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./src/pages/index.css">
+    <script src="./src/pages/index.js" defer></script>
+    <title>Mesto</title>
+</head>
+<body class="page">
+    <header class="header">
+        <img src="./src/images/logo.png" alt="Логотип" class="header__logo">
+    </header>
+    <main class="content">
+        <section class="profile">
+            <div class="profile__content">
+                <div class="profile__avatar">
+                    <img src="./src/images/Avatar.png" alt="Аватар" class="profile__avatar-img">
+                </div>
+                <div class="profile__info">
+                    <div class="profile__info-about">
+                        <h1 id="profile__info-name" class="profile__info-name">Жак-Ив Кусто</h1>
+                        <p class="profile__info-job">Исследователь океана</p>
+                    </div>
+                    <button type="button" class="profile__info-button" aria-label="Редактировать профиль"></button>
+                </div>
+            </div>
+            <button type="button" class="profile__add-button" aria-label="Добавить пост"></button>
+        </section>
+        <section class="elements">
+            <ul class="elements__list"></ul>
+        </section>
+    </main>
+    <footer class="footer">
+        <p class="footer__text">&copy; 2022 Mesto Russia</p>
+    </footer>
+
+
+    <div class="popup profile__editform">
+        <div class="popup__container">
+            <form class="popup__form" name="profile" novalidate>
+                <h2 class="popup__title">Редактировать профиль</h2>
+                <input class="popup__input" id="name" type="text" name="name" placeholder="Имя" minlength="2" maxlength="40" required>
+                <span class="popup__input-error name-error"></span>
+                <input class="popup__input" id="job" type="text" name="job" placeholder="О себе" minlength="2" maxlength="200" required>
+                <span class="popup__input-error job-error"></span>
+                <button class="popup__btn-save" type="submit" title="Сохранить">Сохранить</button>
+
+                <button type="button" aria-label="Кнопка закрыть" class="popup__btn-close"></button>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="popup popup__newpost">
+        <div class="popup__container">
+            <form class="popup__form" name="newpost" novalidate>
+                <h2 class="popup__title">Новое место</h2>
+                <input class="popup__input" id="postname" type="text" name="postname" placeholder="Название" minlength="2" maxlength="30" required>
+                <span class="popup__input-error postname-error"></span>
+                <input class="popup__input" id="postlink" type="text" name="postlink" placeholder="Ссылка на картинку" required>
+                <span class="popup__input-error postlink-error"></span>
+                <button class="popup__btn-save" type="submit" title="Создать">Создать</button>
+
+                <button type="button" aria-label="Кнопка закрыть" class="popup__btn-close"></button>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="popup popup__confirm">
+        <div class="popup__container">
+            <form class="popup__form" name="confirm" novalidate>
+                <h2 class="popup__title">Вы уверены?</h2>
+                <button class="popup__btn-save popup__btn-confirm" type="submit" title="Подтвердить">Да</button>
+                <button type="button" aria-label="Кнопка закрыть" class="popup__btn-close "></button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

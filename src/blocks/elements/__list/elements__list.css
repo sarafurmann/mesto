@@ -1,0 +1,6 @@
+.elements__list {
+    list-style: none;
+    display: grid;
+    column-gap: 18px;
+    row-gap: 21px;
+}
