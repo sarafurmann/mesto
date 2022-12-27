@@ -1,5 +1,5 @@
 let profileInfoButton = document.body.querySelector(".profile__info-button");
-let profileEditform = document.body.querySelector(".profile__editform");
+let profileEditform = document.body.querySelector(".popup--profile-editform");
 let profileEditformCloseButton = profileEditform.querySelector(".popup__btn-close");
 
 profileInfoButton.addEventListener("click", function clickHandler() {
