@@ -8,9 +8,9 @@
     border: none;
     cursor: pointer;
     margin-top: 25px;
-    transition: opacity .1s ease;
+    transition: opacity .3s ease;
 }
 
 .elements__info-btn:hover {
-    opacity: 0.3;
+    opacity: 0.5;
 }

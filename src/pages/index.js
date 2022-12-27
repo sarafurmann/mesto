@@ -1,49 +1,47 @@
-let profileInfoButton = document.body.querySelector(".profile__info-button");
-let profileEditform = document.body.querySelector(".popup-profile-editform");
-let profileEditformCloseButton = profileEditform.querySelector(".popup__btn-close");
+let profileInfoButton = document.body.querySelector('.profile__info-button');
+let profileEditform = document.body.querySelector('#editform');
+let profileEditformCloseButton = profileEditform.querySelector('.popup__btn-close');
+let profileName = document.body.querySelector('.profile__info-name');
+let profileJob = document.body.querySelector('.profile__info-job');
+let profileNameAbout = profileEditform.querySelector('#name');
+let profileJobPlace = profileEditform.querySelector('#job');
 
-profileInfoButton.addEventListener("click", function clickHandler() {
-    profileEditform.classList.add("active");
-})
 
-profileEditformCloseButton.addEventListener("click", function clickHandlerClose() {
-    profileEditform.classList.remove("active");
-})
 
-profileEditform.addEventListener("submit", function handleFormSubmit (evt) {
+function clickHandler() {
+    renderProfileForm(profileName.textContent, profileJob.textContent);
+    profileEditform.classList.add('popup_opened');
+}
+
+profileInfoButton.addEventListener('click', clickHandler);
+
+function clickHandlerClose() {
+    closePopup();
+}
+
+profileEditformCloseButton.addEventListener('click', clickHandlerClose);
+
+function closePopup () {
+    profileEditform.classList.remove('popup_opened');
+}
+
+function handleFormSubmit (evt) {
     evt.preventDefault();
-    let formData = new FormData(evt.target);
-    let profile = {
-        name: formData.get("name"),
-        job: formData.get("job")
-    }
 
-    renderProfile(profile);
+    renderProfile(profileNameAbout.value, profileJobPlace.value);
 
-    profileEditform.classList.remove("active");
-})
-
-let profile = {
-    name: "Жак-Ив Кусто",
-    job: "Исследователь океана"
-};
-
-function renderProfile(profile) {
-    let profileName = document.body.querySelector(".profile__info-name");
-    profileName.textContent = profile.name;
-
-    let profileJob = document.body.querySelector(".profile__info-job");
-    profileJob.textContent = profile.job;
+    closePopup();
 }
 
-function renderProfileForm(profile) {
-    let profileNameAbout = profileEditform.querySelector("#name");
-    profileNameAbout.value = profile.name;
+profileEditform.addEventListener('submit', handleFormSubmit)
 
-    let profileJobPlace = profileEditform.querySelector("#job");
-    profileJobPlace.value = profile.job;
+function renderProfile(name, job) {
+    profileName.textContent = name;
+    profileJob.textContent = job;
 }
 
-renderProfile(profile);
-renderProfileForm(profile);
+function renderProfileForm(name, job) {
+    profileNameAbout.value = name;
+    profileJobPlace.value = job;
+}
 
