@@ -1,28 +1,29 @@
 let profileInfoButton = document.body.querySelector('.profile__info-button');
-let profileEditform = document.body.querySelector('#editform');
-let profileEditformCloseButton = profileEditform.querySelector('.popup__btn-close');
+let profileEditPopup= document.body.querySelector('#editform');
+let profileEditform = profileEditPopup.querySelector('form');
+let profileEditformCloseButton = profileEditPopup.querySelector('.popup__btn-close');
 let profileName = document.body.querySelector('.profile__info-name');
 let profileJob = document.body.querySelector('.profile__info-job');
 let profileNameAbout = profileEditform.querySelector('#name');
 let profileJobPlace = profileEditform.querySelector('#job');
 
+profileInfoButton.addEventListener('click', clickHandler);
 
+profileEditformCloseButton.addEventListener('click', clickHandlerClose);
+
+profileEditform.addEventListener('submit', handleFormSubmit);
 
 function clickHandler() {
     renderProfileForm(profileName.textContent, profileJob.textContent);
-    profileEditform.classList.add('popup_opened');
+    profileEditPopup.classList.add('popup_opened');
 }
-
-profileInfoButton.addEventListener('click', clickHandler);
 
 function clickHandlerClose() {
     closePopup();
 }
 
-profileEditformCloseButton.addEventListener('click', clickHandlerClose);
-
 function closePopup () {
-    profileEditform.classList.remove('popup_opened');
+    profileEditPopup.classList.remove('popup_opened');
 }
 
 function handleFormSubmit (evt) {
@@ -32,8 +33,6 @@ function handleFormSubmit (evt) {
 
     closePopup();
 }
-
-profileEditform.addEventListener('submit', handleFormSubmit)
 
 function renderProfile(name, job) {
     profileName.textContent = name;

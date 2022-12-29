@@ -9,7 +9,7 @@
     border-radius: 2px;
     transition: opacity 0.2s linear;
     border: none;
-    margin: 55px 36px 38px;
+    margin-top: 18px;
     padding: 0;
     height: 50px;
 }
@@ -20,7 +20,8 @@
 
 @media screen and (max-width: 1023px) {
     .popup__btn-save {
-      margin: 84px 23px 40px;
+      margin-top: 15px;
       height: 46px;
+      font-size: 14px;
     }
 }
