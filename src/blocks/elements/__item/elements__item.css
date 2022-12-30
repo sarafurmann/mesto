@@ -5,9 +5,3 @@
     overflow: hidden;
     width: 282px;
 }
-
-@media screen and (max-width: 1023px) {
-    .elements__item {
-      height: 361px;
-    }
-}
