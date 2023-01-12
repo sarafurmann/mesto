@@ -14,3 +14,7 @@
 .elements__info-btn:hover {
     opacity: 0.5;
 }
+
+.elements__info-btn.elements__info-btn_liked {
+    background-image: url(../../../images/liked.svg);
+}

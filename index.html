@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./src/pages/index.css">
-    <script src="./src/scripts/index.js" defer></script>
+    <script src="./src/scripts/profile.js" defer></script>
+    <script src="./src/scripts/cards.js" defer></script>
     <title>Mesto</title>
 </head>
 <body class="page">
@@ -28,7 +29,7 @@
         </section>
         <section class="elements">
             <ul class="elements__list">
-                <li class="elements__item">
+                <!-- <li class="elements__item">
                     <img src="./src/images/Karachaevsk.png" alt="Карачаевск" class="elements__img">
                     <div class="elements__info">
                         <h2 class="elements__title">Карачаевск</h2>
@@ -69,7 +70,7 @@
                         <h2 class="elements__title">Карачаевск</h2>
                         <button type="button" class="elements__info-btn" aria-label="Лайк"></button>
                     </div>
-                </li>
+                </li> -->
             </ul>
         </section>
     </main>
@@ -93,20 +94,28 @@
     </div>
 
 
-    <!-- <div class="popup popup-newpost">
+    <div class="popup" id="newpost">
         <div class="popup__container">
             <form class="popup__form" name="newpost" novalidate>
                 <h2 class="popup__title">Новое место</h2>
                 <input class="popup__input" id="postname" type="text" name="postname" placeholder="Название" minlength="2" maxlength="30" required>
-                <span class="popup__input-error postname-error"></span>
+                <!-- <span class="popup__input-error postname-error"></span> -->
                 <input class="popup__input" id="postlink" type="text" name="postlink" placeholder="Ссылка на картинку" required>
-                <span class="popup__input-error postlink-error"></span>
+                <!-- <span class="popup__input-error postlink-error"></span> -->
                 <button class="popup__btn-save" type="submit" title="Создать">Создать</button>
 
                 <button type="button" aria-label="Кнопка закрыть" class="popup__btn-close"></button>
             </form>
         </div>
-    </div> -->
+    </div>
+
+    <div class="popup element-zoom" id="element-zoom">
+        <figure class="element-zoom__container">
+            <img class="element-zoom__img">
+            <figcaption class="element-zoom__title"></figcaption>
+            <button type="button" aria-label="Кнопка закрыть" class="popup__btn-close"></button>
+        </figure>
+    </div>
 
 
     <!-- <div class="popup popup-confirm">
