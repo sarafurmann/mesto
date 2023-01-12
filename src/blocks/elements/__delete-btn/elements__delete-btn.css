@@ -10,7 +10,6 @@
     transition: all .1s linear;
     /* display: none; */
     margin: 0;
-    position: absolute;
     top: 18px;
     right: 15px;
     z-index: 1;
