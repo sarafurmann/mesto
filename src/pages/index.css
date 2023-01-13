@@ -26,12 +26,6 @@
 @import url(../blocks/elements/__info-btn/elements__info-btn.css);
 @import url(../blocks/elements/__delete-btn/elements__delete-btn.css);
 
-@import url(../blocks/element-zoom/element-zoom.css);
-@import url(../blocks/element-zoom/__img/element-zoom__img.css);
-@import url(../blocks/element-zoom/__name/element-zoom__title.css);
-@import url(../blocks/element-zoom/__container/element-zoom__container.css);
-@import url(../blocks/element-zoom/__btnclose/element-zoom__btnclose.css);
-
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__text/footer__text.css);
 
@@ -43,3 +37,9 @@
 @import url(../blocks/popup/__input-error/popup__input-error.css);
 @import url(../blocks/popup/__btn-save/popup__btn-save.css);
 @import url(../blocks/popup/__btn-close/popup__btn-close.css);
+
+@import url(../blocks/element-zoom/element-zoom.css);
+@import url(../blocks/element-zoom/__img/element-zoom__img.css);
+@import url(../blocks/element-zoom/__title/element-zoom__title.css);
+@import url(../blocks/element-zoom/__container/element-zoom__container.css);
+@import url(../blocks/element-zoom/__btnclose/element-zoom__btnclose.css);

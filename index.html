@@ -5,8 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./src/pages/index.css">
-    <script src="./src/scripts/profile.js" defer></script>
-    <script src="./src/scripts/cards.js" defer></script>
+    <script src="./src/scripts/index.js" defer></script>
     <title>Mesto</title>
 </head>
 <body class="page">
@@ -29,48 +28,6 @@
         </section>
         <section class="elements">
             <ul class="elements__list">
-                <!-- <li class="elements__item">
-                    <img src="./src/images/Karachaevsk.png" alt="Карачаевск" class="elements__img">
-                    <div class="elements__info">
-                        <h2 class="elements__title">Карачаевск</h2>
-                        <button type="button" class="elements__info-btn" aria-label="Лайк"></button>
-                    </div>
-                </li>
-                <li class="elements__item">
-                    <img src="./src/images/Mountain-Elbrus.png" alt="Гора Эльбрус" class="elements__img">
-                    <div class="elements__info">
-                        <h2 class="elements__title">Гора Эльбрус</h2>
-                        <button type="button" class="elements__info-btn" aria-label="Лайк"></button>
-                    </div>
-                </li>
-                <li class="elements__item">
-                    <img src="./src/images/Dombay.png" alt="Домбай" class="elements__img">
-                    <div class="elements__info">
-                        <h2 class="elements__title">Домбай</h2>
-                        <button type="button" class="elements__info-btn" aria-label="Лайк"></button>
-                    </div>
-                </li>
-                <li class="elements__item">
-                    <img src="./src/images/Mountain-Elbrus.png" alt="Гора Эльбрус" class="elements__img">
-                    <div class="elements__info">
-                        <h2 class="elements__title">Гора Эльбрус</h2>
-                        <button type="button" class="elements__info-btn" aria-label="Лайк"></button>
-                    </div>
-                </li>
-                <li class="elements__item">
-                    <img src="./src/images/Dombay.png" alt="Домбай" class="elements__img">
-                    <div class="elements__info">
-                        <h2 class="elements__title">Домбай</h2>
-                        <button type="button" class="elements__info-btn" aria-label="Лайк"></button>
-                    </div>
-                </li>
-                <li class="elements__item">
-                    <img src="./src/images/Karachaevsk.png" alt="Карачаевск" class="elements__img">
-                    <div class="elements__info">
-                        <h2 class="elements__title">Карачаевск</h2>
-                        <button type="button" class="elements__info-btn" aria-label="Лайк"></button>
-                    </div>
-                </li> -->
             </ul>
         </section>
     </main>
@@ -127,6 +84,17 @@
             </form>
         </div>
     </div> -->
+
+    <template id="cardTemplate">
+        <li class="elements__item">
+            <img alt="Карачаевск" class="elements__img">
+            <div class="elements__info">
+                <h2 class="elements__title"></h2>
+                <button type="button" class="elements__info-btn" aria-label="Лайк"></button>
+            </div>
+            <button type="button" class="elements__delete-btn"></button>
+        </li>
+    </template>
 
 </body>
 </html>
