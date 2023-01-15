@@ -139,8 +139,9 @@ function createCard(cardItem) {
 
     cardDelete.addEventListener('click', deleteCard);
 
-    function deleteCard() {
-        cardsContainer.removeChild(cardElement);
+    function deleteCard(evt) {
+        const card = evt.target.closest('.elements__item');
+        card.remove();
     }
 
 
