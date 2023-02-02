@@ -29,7 +29,6 @@ const cardTemplate = document.querySelector('#cardTemplate').content;
 
 const formElement = document.body.querySelector('.popup__form');
 const formInput = formElement.querySelector('.postname-error');
-buttonSave = newCardPopup.querySelector('.popup__btn-save');
 
 
 
@@ -60,6 +59,8 @@ let JobValidation = validateNewCardLink('');
 function handleChangeCardName() {
     const errorName = newCardPopup.querySelector('.postname-error');
     cardNameValidation = validateNewCardName(cardNameForm.value);
+    const buttonSave = newCardPopup.querySelector('.popup__btn-save');
+
 
     if (cardNameValidation.valid) {
         cardNameForm.classList.remove(cardNameValidation.errorClass);
@@ -75,6 +76,7 @@ function handleChangeCardName() {
 function handleChangeCardLink() {
     const errorLink = newCardPopup.querySelector('.postlink-error');
     cardLinkValidation = validateNewCardLink(cardLink.value);
+    const buttonSave = newCardPopup.querySelector('.popup__btn-save');
     
 
     if (cardLinkValidation.valid) {
@@ -91,6 +93,7 @@ function handleChangeCardLink() {
 function handleChangeNameAbout() {
     const errorNameEdit = profilePopup.querySelector('.name-error');
     NameEditValidation = validateNameEdit(profileNameAbout.value);
+    const buttonSave = profilePopup.querySelector('.popup__btn-save');
 
     if (NameEditValidation.valid) {
         profileNameAbout.classList.remove(NameEditValidation.errorClass);
@@ -106,6 +109,7 @@ function handleChangeNameAbout() {
 function handleChangeJobPlace() {
     const errorJob = profilePopup.querySelector('.job-error');
     JobValidation = validateJob(profileJobPlace.value);
+    const buttonSave = profilePopup.querySelector('.popup__btn-save');
 
     if (JobValidation.valid) {
         profileJobPlace.classList.remove(JobValidation.errorClass);
