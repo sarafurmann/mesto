@@ -9,8 +9,13 @@
     bottom: 0;
     left: 0;
     z-index: 1;
+    visibility: hidden;
+    opacity: 0;
 }
 
 .popup.popup_opened {
     display: flex;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.7s ease-out;
 }
