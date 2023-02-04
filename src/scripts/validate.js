@@ -1,97 +1,45 @@
-function isValidHttpUrl(url) {
-    return url.startsWith('http://') || url.startsWith('https://')
-}
+function enableValidation(config) {
+    const form = document.querySelector(config.formSelector);
+    const inputContainers = Array.from(document.querySelectorAll(config.inputSelector));
 
-function validateNewCardName(value) {
-    if (value === '') {
-        return {
-            errorMessage: 'Вы пропустили это поле.',
-            errorClass: 'popup__input_error',
-            valid: false 
+    const inputs = inputContainers.map(function (inputContainer) {
+        return inputContainer.querySelector('input');
+    })
+
+    form.addEventListener('submit', function handleSubmit(evt) {
+        evt.preventDefault();
+        const isInvalid = inputs.some(function (input) {
+            return !input.checkValidity();
+        });
+
+        if (isInvalid) {
+            return;
         }
-    }
 
-    if (!(value.length >= 2 && value.length <= 30)) {
-        return {
-            errorMessage: 'Длина имени от 2 до 30 символов.',
-            errorClass: 'popup__input_error',
-            valid: false 
-        }
-    }
+        config.onSubmit(inputs.map(function (input) {
+            return input.value;
+        }));
+    })
 
-    return {
-        errorClass: 'popup__input_error',
-        valid: true            
-    }
-}
+    inputContainers.forEach(function (inputContainer) {
+        const input = inputContainer.querySelector('input');
+        input.addEventListener('input', function () {
+            const errorElement = inputContainer.querySelector(config.errorSelector);
+            const buttonSave = document.querySelector(config.submitButtonSelector);
 
-function validateNewCardLink(value) {
-    if (value === '') {
-        return {
-            errorMessage: 'Введите адрес сайта.',
-            errorClass: 'popup__input_error',
-            valid: false 
-        }
-    }
+            if (input.checkValidity()) {
+                input.classList.remove(config.inputErrorClass);
+                errorElement.textContent = '';
+            } else {
+                errorElement.textContent = input.validationMessage;
+                input.classList.add(config.inputErrorClass);
+            }
 
-    if (!isValidHttpUrl(cardLink.value)) {
-        return {
-            errorMessage: 'Введите URL.',
-            errorClass: 'popup__input_error',
-            valid: false 
-        }
-    }
-
-    return {
-        errorClass: 'popup__input_error',
-        valid: true            
-    }
-}
+            buttonSave.disabled = inputs.some(function (input) {
+                return !input.checkValidity();
+            });
+        })
+    })
 
 
-
-function validateNameEdit(value) {
-    if (value === '') {
-        return {
-            errorMessage: 'Заполните это поле.',
-            errorClass: 'popup__input_error',
-            valid: false 
-        }
-    }
-
-    if (!(value.length >= 2 && value.length <= 30)) {
-        return {
-            errorMessage: 'Длина имени от 2 до 30 символов.',
-            errorClass: 'popup__input_error',
-            valid: false 
-        }
-    }
-
-    return {
-        errorClass: 'popup__input_error',
-        valid: true            
-    }
-}
-
-function validateJob(value) {
-    if (value === '') {
-        return {
-            errorMessage: 'Заполните это поле.',
-            errorClass: 'popup__input_error',
-            valid: false 
-        }
-    }
-
-    if (!(value.length >= 2 && value.length <= 300)) {
-        return {
-            errorMessage: 'Длина имени от 2 до 300 символов.',
-            errorClass: 'popup__input_error',
-            valid: false 
-        }
-    }
-
-    return {
-        errorClass: 'popup__input_error',
-        valid: true            
-    }
 }

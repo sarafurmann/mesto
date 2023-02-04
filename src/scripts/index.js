@@ -16,7 +16,7 @@ const newCardPopup= document.body.querySelector('#newpost');
 const newCardForm = newCardPopup.querySelector('form');
 const newCardFormCloseButton = newCardPopup.querySelector('.popup__btn-close');
 
-const cardNameForm = newCardForm.querySelector('#postname');
+const cardNameInput = newCardForm.querySelector('#postname');
 const cardLink = newCardForm.querySelector('#postlink');
 
 const zoomPopup = document.body.querySelector('#element-zoom');
@@ -28,7 +28,6 @@ const elementZoomTitle = document.body.querySelector('.element-zoom__title');
 const cardTemplate = document.querySelector('#cardTemplate').content;
 
 const formElement = document.body.querySelector('.popup__form');
-const formInput = formElement.querySelector('.postname-error');
 
 
 
@@ -36,93 +35,11 @@ profileInfoButton.addEventListener('click', handleClick);
 
 profileEditformCloseButton.addEventListener('click', handleClickClose);
 
-profileEditform.addEventListener('submit', handleFormSubmit);
-
 zoomPopupCloseBtn.addEventListener('click', handleClose);
 
 newCardButton.addEventListener('click', handleClickCard);
 
 newCardFormCloseButton.addEventListener('click', handleClickCloseCard);
-
-newCardForm.addEventListener('submit', handleFormSubmitCard);
-
-cardNameForm.addEventListener('input', handleChangeCardName);
-cardLink.addEventListener('input', handleChangeCardLink);
-profileNameAbout.addEventListener('input', handleChangeNameAbout);
-profileJobPlace.addEventListener('input', handleChangeJobPlace);
-
-let cardNameValidation = validateNewCardName('');
-let cardLinkValidation = validateNewCardLink('');
-let NameEditValidation = validateNewCardLink('');
-let JobValidation = validateNewCardLink('');
-
-function handleChangeCardName() {
-    const errorName = newCardPopup.querySelector('.postname-error');
-    cardNameValidation = validateNewCardName(cardNameForm.value);
-    const buttonSave = newCardPopup.querySelector('.popup__btn-save');
-
-
-    if (cardNameValidation.valid) {
-        cardNameForm.classList.remove(cardNameValidation.errorClass);
-        errorName.textContent = '';
-    } else {
-        errorName.textContent = cardNameValidation.errorMessage;
-        cardNameForm.classList.add(cardNameValidation.errorClass);
-    }
-
-    buttonSave.disabled = !cardNameValidation.valid || !cardLinkValidation.valid;
-}
-
-function handleChangeCardLink() {
-    const errorLink = newCardPopup.querySelector('.postlink-error');
-    cardLinkValidation = validateNewCardLink(cardLink.value);
-    const buttonSave = newCardPopup.querySelector('.popup__btn-save');
-    
-
-    if (cardLinkValidation.valid) {
-        cardLink.classList.remove(cardLinkValidation.errorClass);
-        errorLink.textContent = '';
-    } else {
-        errorLink.textContent = cardLinkValidation.errorMessage;
-        cardLink.classList.add(cardLinkValidation.errorClass);
-    }
-
-    buttonSave.disabled = !cardNameValidation.valid || !cardLinkValidation.valid;
-}
-
-function handleChangeNameAbout() {
-    const errorNameEdit = profilePopup.querySelector('.name-error');
-    NameEditValidation = validateNameEdit(profileNameAbout.value);
-    const buttonSave = profilePopup.querySelector('.popup__btn-save');
-
-    if (NameEditValidation.valid) {
-        profileNameAbout.classList.remove(NameEditValidation.errorClass);
-        errorNameEdit.textContent = '';
-    } else {
-        errorNameEdit.textContent = NameEditValidation.errorMessage;
-        profileNameAbout.classList.add(NameEditValidation.errorClass);
-    }
-
-    buttonSave.disabled = !NameEditValidation.valid || !JobValidation.valid;
-}
-
-function handleChangeJobPlace() {
-    const errorJob = profilePopup.querySelector('.job-error');
-    JobValidation = validateJob(profileJobPlace.value);
-    const buttonSave = profilePopup.querySelector('.popup__btn-save');
-
-    if (JobValidation.valid) {
-        profileJobPlace.classList.remove(JobValidation.errorClass);
-        errorJob.textContent = '';
-    } else {
-        errorJob.textContent = JobValidation.errorMessage;
-        profileJobPlace.classList.add(JobValidation.errorClass);
-    }
-
-    buttonSave.disabled = !NameEditValidation.valid || !JobValidation.valid;
-}
-
-
 
 function likedHandler(event) {
     event.target.classList.toggle('elements__info-btn_liked');
@@ -159,41 +76,6 @@ function handleClickClose() {
     closePopup(profilePopup);
 }
 
-function handleFormSubmit (evt) {
-    evt.preventDefault();
-
-    const errorNameEdit = profilePopup.querySelector('.name-error');
-    const errorJob = profilePopup.querySelector('.job-error');
-
-    const NameEditValidation = validateNameEdit(profileNameAbout.value);
-    const JobValidation = validateJob(profileJobPlace.value);
-
-    if (NameEditValidation.valid) {
-        profileNameAbout.classList.remove(NameEditValidation.errorClass);
-        errorNameEdit.textContent = '';
-    } else {
-        errorNameEdit.textContent = NameEditValidation.errorMessage;
-        profileNameAbout.classList.add(NameEditValidation.errorClass);
-    }
-
-    if (JobValidation.valid) {
-        profileJobPlace.classList.remove(JobValidation.errorClass);
-        errorJob.textContent = '';
-    } else {
-        errorJob.textContent = JobValidation.errorMessage;
-        profileJobPlace.classList.add(JobValidation.errorClass);
-    }
-
-    if (!NameEditValidation.valid || !JobValidation.valid) {
-        return;
-    }
-
-
-    renderProfile(profileNameAbout.value, profileJobPlace.value);
-
-    closePopup(profilePopup);
-}
-
 function renderProfile(name, job) {
     profileName.textContent = name;
     profileJob.textContent = job;
@@ -203,10 +85,6 @@ function renderProfileForm(name, job) {
     profileNameAbout.value = name;
     profileJobPlace.value = job;
 }
-
-
-
-
 
 function createCard(cardItem) {
     const cardElement = cardTemplate.querySelector('.elements__item').cloneNode(true);
@@ -229,9 +107,6 @@ function createCard(cardItem) {
         card.remove();
     }
 
-
-    cardImage.addEventListener('click', openHandler);
-
     function openHandler() {
         openPopup(zoomPopup);
 
@@ -239,6 +114,8 @@ function createCard(cardItem) {
         elementZoonImage.src = cardItem.link;
         elementZoonImage.alt = cardItem.name;
     }
+
+    cardImage.addEventListener('click', openHandler);
 
     return cardElement;
 }
@@ -249,53 +126,10 @@ initialCards.forEach(function initCard(cardItem) {
     cardsContainer.append(card);
 });
 
-function handleFormSubmitCard (evt) {
-    evt.preventDefault();
-
-    const errorName = newCardPopup.querySelector('.postname-error');
-    const errorLink = newCardPopup.querySelector('.postlink-error');
-
-    const cardNameValidation = validateNewCardName(cardNameForm.value);
-    const cardLinkValidation = validateNewCardLink(cardLink.value);
-    
-
-    if (cardNameValidation.valid) {
-        cardNameForm.classList.remove(cardNameValidation.errorClass);
-        errorName.textContent = '';
-    } else {
-        errorName.textContent = cardNameValidation.errorMessage;
-        cardNameForm.classList.add(cardNameValidation.errorClass);
-    }
-
-    if (cardLinkValidation.valid) {
-        cardLink.classList.remove(cardLinkValidation.errorClass);
-        errorLink.textContent = '';
-    } else {
-        errorLink.textContent = cardLinkValidation.errorMessage;
-        cardLink.classList.add(cardLinkValidation.errorClass);
-    }
-
-    if (!cardNameValidation.valid || !cardLinkValidation.valid) {
-        return;
-    }
-
-    closePopup(newCardPopup);
-
-    const card = createCard({
-        name: cardNameForm.value,
-        link: cardLink.value
-    });
-
-    cardsContainer.prepend(card);
-
-    cardNameForm.value = '';
-    cardLink.value = '';
-}
-
 function closeEscape(evt) {
     const key = evt.key;
     if (key === 'Escape') {
-        closePopup(document.querySelector('#element-zoom'));        
+        closePopup(document.querySelector('.popup_opened'));        
     }
 }
 
@@ -308,3 +142,44 @@ popups.forEach((popup) => {
 })
 
 
+function handleProfileFormSubmit (values) {
+    const name = values[0];
+    const job = values[1];
+    renderProfile(name, job);
+
+    closePopup(profilePopup);
+}
+
+enableValidation({
+    formSelector: '#editform .popup__form',
+    inputSelector: '#editform .popup__input-wrapper',
+    errorSelector: '.popup__input-error',
+    inputErrorClass: 'popup__input_error',
+    submitButtonSelector: '#editform .popup__btn-save',
+    onSubmit: handleProfileFormSubmit,
+})
+
+function handleFormSubmitCard (values) {
+    closePopup(newCardPopup);
+
+    const name = values[0];
+    const link = values[1];
+
+    const card = createCard({
+        name,
+        link,
+    });
+
+    cardsContainer.prepend(card);
+
+    newCardForm.reset();
+}
+
+enableValidation({
+    formSelector: '#newpost .popup__form',
+    inputSelector: '#newpost .popup__input-wrapper',
+    errorSelector: '.popup__input-error',
+    inputErrorClass: 'popup__input_error',
+    submitButtonSelector: '#newpost .popup__btn-save',
+    onSubmit: handleFormSubmitCard,
+})
