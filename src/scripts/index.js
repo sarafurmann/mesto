@@ -41,6 +41,27 @@ newCardButton.addEventListener('click', handleClickCard);
 
 newCardFormCloseButton.addEventListener('click', handleClickCloseCard);
 
+profilePopup.addEventListener('submit', function handleProfileFormSubmit (evt) {
+    evt.preventDefault();
+    renderProfile(evt.target.name.value, evt.target.job.value);
+
+    document.querySelectorAll('.popup').forEach(closePopup);
+})
+
+newCardPopup.addEventListener('submit', function handleFormSubmitCard (evt) {
+    evt.preventDefault();
+
+    const card = createCard({
+        name: evt.target.postname.value,
+        link: evt.target.postlink.value,
+    });
+
+    cardsContainer.prepend(card);
+
+    newCardForm.reset();
+    document.querySelectorAll('.popup').forEach(closePopup);
+})
+
 function likedHandler(event) {
     event.target.classList.toggle('elements__info-btn_liked');
 }
@@ -50,11 +71,11 @@ function handleClickCard() {
 }
 
 function handleClickCloseCard() {
-    closePopup(newCardPopup);
+    document.querySelectorAll('.popup').forEach(closePopup);
 }
 
 function handleClose() {
-    closePopup(zoomPopup);
+    document.querySelectorAll('.popup').forEach(closePopup);
 }
 
 function openPopup(popup) {
@@ -73,7 +94,7 @@ function handleClick() {
 }
 
 function handleClickClose() {
-    closePopup(profilePopup);
+    document.querySelectorAll('.popup').forEach(closePopup);
 }
 
 function renderProfile(name, job) {
@@ -141,45 +162,12 @@ popups.forEach((popup) => {
     })
 })
 
-
-function handleProfileFormSubmit (values) {
-    const name = values[0];
-    const job = values[1];
-    renderProfile(name, job);
-
-    closePopup(profilePopup);
-}
+renderProfileForm(profileName.textContent, profileJob.textContent);
 
 enableValidation({
-    formSelector: '#editform .popup__form',
-    inputSelector: '#editform .popup__input-wrapper',
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input-wrapper',
     errorSelector: '.popup__input-error',
     inputErrorClass: 'popup__input_error',
-    submitButtonSelector: '#editform .popup__btn-save',
-    onSubmit: handleProfileFormSubmit,
-})
-
-function handleFormSubmitCard (values) {
-    closePopup(newCardPopup);
-
-    const name = values[0];
-    const link = values[1];
-
-    const card = createCard({
-        name,
-        link,
-    });
-
-    cardsContainer.prepend(card);
-
-    newCardForm.reset();
-}
-
-enableValidation({
-    formSelector: '#newpost .popup__form',
-    inputSelector: '#newpost .popup__input-wrapper',
-    errorSelector: '.popup__input-error',
-    inputErrorClass: 'popup__input_error',
-    submitButtonSelector: '#newpost .popup__btn-save',
-    onSubmit: handleFormSubmitCard,
+    submitButtonSelector: '.popup__btn-save',
 })

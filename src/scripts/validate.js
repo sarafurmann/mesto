@@ -1,45 +1,34 @@
 function enableValidation(config) {
-    const form = document.querySelector(config.formSelector);
-    const inputContainers = Array.from(document.querySelectorAll(config.inputSelector));
+    const forms = document.querySelectorAll(config.formSelector);
+    forms.forEach((form) => {
+        const inputContainers = Array.from(form.querySelectorAll(config.inputSelector));
+        const buttonSave = form.querySelector(config.submitButtonSelector);
 
-    const inputs = inputContainers.map(function (inputContainer) {
-        return inputContainer.querySelector('input');
-    })
+        const inputs = inputContainers.map(function (inputContainer) {
+            return inputContainer.querySelector('input');
+        })
 
-    form.addEventListener('submit', function handleSubmit(evt) {
-        evt.preventDefault();
-        const isInvalid = inputs.some(function (input) {
+        buttonSave.disabled = inputs.some(function (input) {
             return !input.checkValidity();
         });
 
-        if (isInvalid) {
-            return;
-        }
+        inputContainers.forEach(function (inputContainer) {
+            const input = inputContainer.querySelector('input');
+            input.addEventListener('input', function () {
+                const errorElement = inputContainer.querySelector(config.errorSelector);
 
-        config.onSubmit(inputs.map(function (input) {
-            return input.value;
-        }));
-    })
+                if (input.checkValidity()) {
+                    input.classList.remove(config.inputErrorClass);
+                    errorElement.textContent = '';
+                } else {
+                    errorElement.textContent = input.validationMessage;
+                    input.classList.add(config.inputErrorClass);
+                }
 
-    inputContainers.forEach(function (inputContainer) {
-        const input = inputContainer.querySelector('input');
-        input.addEventListener('input', function () {
-            const errorElement = inputContainer.querySelector(config.errorSelector);
-            const buttonSave = document.querySelector(config.submitButtonSelector);
-
-            if (input.checkValidity()) {
-                input.classList.remove(config.inputErrorClass);
-                errorElement.textContent = '';
-            } else {
-                errorElement.textContent = input.validationMessage;
-                input.classList.add(config.inputErrorClass);
-            }
-
-            buttonSave.disabled = inputs.some(function (input) {
-                return !input.checkValidity();
-            });
+                buttonSave.disabled = inputs.some(function (input) {
+                    return !input.checkValidity();
+                });
+            })
         })
     })
-
-
 }
