@@ -59,6 +59,8 @@ newCardPopup.addEventListener('submit', function handleFormSubmitCard (evt) {
     cardsContainer.prepend(card);
 
     newCardForm.reset();
+    const submitButton = newCardPopup.querySelector('.popup__btn-save');
+    submitButton.disabled = true;
     document.querySelectorAll('.popup').forEach(closePopup);
 })
 
@@ -166,8 +168,8 @@ renderProfileForm(profileName.textContent, profileJob.textContent);
 
 enableValidation({
     formSelector: '.popup__form',
-    inputSelector: '.popup__input-wrapper',
+    inputSelector: '.popup__input',
     errorSelector: '.popup__input-error',
     inputErrorClass: 'popup__input_error',
     submitButtonSelector: '.popup__btn-save',
-})
+});

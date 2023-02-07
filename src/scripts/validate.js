@@ -1,33 +1,38 @@
+function setDisabledToSubmitButton(button, inputs) {
+    button.disabled = inputs.some(function (input) {
+        return !input.checkValidity();
+    });
+}
+
+function showError(input, errorElement, errorClass) {
+    errorElement.textContent = input.validationMessage;
+    input.classList.add(errorClass);
+}
+
+function hideError(input, errorElement, errorClass) {
+    input.classList.remove(errorClass);
+    errorElement.textContent = '';
+}
+
 function enableValidation(config) {
     const forms = document.querySelectorAll(config.formSelector);
     forms.forEach((form) => {
-        const inputContainers = Array.from(form.querySelectorAll(config.inputSelector));
-        const buttonSave = form.querySelector(config.submitButtonSelector);
+        const inputs = Array.from(form.querySelectorAll(config.inputSelector));
+        const submitButton = form.querySelector(config.submitButtonSelector);
 
-        const inputs = inputContainers.map(function (inputContainer) {
-            return inputContainer.querySelector('input');
-        })
+        setDisabledToSubmitButton(submitButton, inputs);
 
-        buttonSave.disabled = inputs.some(function (input) {
-            return !input.checkValidity();
-        });
-
-        inputContainers.forEach(function (inputContainer) {
-            const input = inputContainer.querySelector('input');
+        inputs.forEach(function (input, i) {
             input.addEventListener('input', function () {
-                const errorElement = inputContainer.querySelector(config.errorSelector);
+                const errorElement = form.querySelectorAll(config.errorSelector)[i];
 
                 if (input.checkValidity()) {
-                    input.classList.remove(config.inputErrorClass);
-                    errorElement.textContent = '';
+                    hideError(input, errorElement, config.inputErrorClass);
                 } else {
-                    errorElement.textContent = input.validationMessage;
-                    input.classList.add(config.inputErrorClass);
+                    showError(input, errorElement, config.inputErrorClass);
                 }
 
-                buttonSave.disabled = inputs.some(function (input) {
-                    return !input.checkValidity();
-                });
+                setDisabledToSubmitButton(submitButton, inputs);
             })
         })
     })
