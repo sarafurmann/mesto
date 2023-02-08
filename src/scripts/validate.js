@@ -22,9 +22,9 @@ function enableValidation(config) {
 
         setDisabledToSubmitButton(submitButton, inputs);
 
-        inputs.forEach(function (input, i) {
+        inputs.forEach(function (input) {
             input.addEventListener('input', function () {
-                const errorElement = form.querySelectorAll(config.errorSelector)[i];
+                const errorElement = form.querySelector('#' + input.id + '-error');
 
                 if (input.checkValidity()) {
                     hideError(input, errorElement, config.inputErrorClass);

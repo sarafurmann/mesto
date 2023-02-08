@@ -169,7 +169,6 @@ renderProfileForm(profileName.textContent, profileJob.textContent);
 enableValidation({
     formSelector: '.popup__form',
     inputSelector: '.popup__input',
-    errorSelector: '.popup__input-error',
     inputErrorClass: 'popup__input_error',
     submitButtonSelector: '.popup__btn-save',
 });
