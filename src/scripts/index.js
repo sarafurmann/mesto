@@ -1,3 +1,6 @@
+import { initialCards, Card } from './Card.js'
+import { FormValidator } from './FormValidator.js'
+
 const popups = document.querySelectorAll('.popup');
 
 const profileInfoButton = document.body.querySelector('.profile__info-button');
@@ -22,13 +25,7 @@ const cardLink = newCardForm.querySelector('#postlink');
 const zoomPopup = document.body.querySelector('#element-zoom');
 const zoomPopupCloseBtn = zoomPopup.querySelector('.popup__btn-close');
 
-const elementZoonImage = document.body.querySelector('.element-zoom__img');
-const elementZoomTitle = document.body.querySelector('.element-zoom__title');
-
-const cardTemplate = document.querySelector('#cardTemplate').content;
-
 const formElement = document.body.querySelector('.popup__form');
-
 
 
 profileInfoButton.addEventListener('click', handleClick);
@@ -51,10 +48,10 @@ profilePopup.addEventListener('submit', function handleProfileFormSubmit (evt) {
 newCardPopup.addEventListener('submit', function handleFormSubmitCard (evt) {
     evt.preventDefault();
 
-    const card = createCard({
+    const card = new Card({
         name: evt.target.postname.value,
         link: evt.target.postlink.value,
-    });
+    }, '#cardTemplate').render();
 
     cardsContainer.prepend(card);
 
@@ -63,10 +60,6 @@ newCardPopup.addEventListener('submit', function handleFormSubmitCard (evt) {
     submitButton.disabled = true;
     document.querySelectorAll('.popup').forEach(closePopup);
 })
-
-function likedHandler(event) {
-    event.target.classList.toggle('elements__info-btn_liked');
-}
 
 function handleClickCard() {
     openPopup(newCardPopup);
@@ -109,42 +102,8 @@ function renderProfileForm(name, job) {
     profileJobPlace.value = job;
 }
 
-function createCard(cardItem) {
-    const cardElement = cardTemplate.querySelector('.elements__item').cloneNode(true);
-    const cardImage = cardElement.querySelector('.elements__img');
-
-    cardImage.src = cardItem.link;
-    cardElement.querySelector('.elements__title').textContent = cardItem.name;
-    cardImage.alt = cardItem.name;
-
-    const cardInfoButton = cardElement.querySelector('.elements__info-btn');
-
-    cardInfoButton.addEventListener('click', likedHandler);
-
-    const cardDelete = cardElement.querySelector('.elements__delete-btn');
-
-    cardDelete.addEventListener('click', deleteCard);
-
-    function deleteCard(evt) {
-        const card = evt.target.closest('.elements__item');
-        card.remove();
-    }
-
-    function openHandler() {
-        openPopup(zoomPopup);
-
-        elementZoomTitle.textContent = cardItem.name;
-        elementZoonImage.src = cardItem.link;
-        elementZoonImage.alt = cardItem.name;
-    }
-
-    cardImage.addEventListener('click', openHandler);
-
-    return cardElement;
-}
-
 initialCards.forEach(function initCard(cardItem) {
-    const card = createCard(cardItem);
+    const card = new Card(cardItem, '#cardTemplate').render();
 
     cardsContainer.append(card);
 });
@@ -166,9 +125,14 @@ popups.forEach((popup) => {
 
 renderProfileForm(profileName.textContent, profileJob.textContent);
 
-enableValidation({
-    formSelector: '.popup__form',
+new FormValidator({
     inputSelector: '.popup__input',
     inputErrorClass: 'popup__input_error',
     submitButtonSelector: '.popup__btn-save',
-});
+}, profileEditform).enableValidation();
+
+new FormValidator({
+    inputSelector: '.popup__input',
+    inputErrorClass: 'popup__input_error',
+    submitButtonSelector: '.popup__btn-save',
+}, newCardForm).enableValidation();
