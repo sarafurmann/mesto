@@ -19,13 +19,8 @@ const newCardPopup= document.body.querySelector('#newpost');
 const newCardForm = newCardPopup.querySelector('form');
 const newCardFormCloseButton = newCardPopup.querySelector('.popup__btn-close');
 
-const cardNameInput = newCardForm.querySelector('#postname');
-const cardLink = newCardForm.querySelector('#postlink');
-
 const zoomPopup = document.body.querySelector('#element-zoom');
 const zoomPopupCloseBtn = zoomPopup.querySelector('.popup__btn-close');
-
-const formElement = document.body.querySelector('.popup__form');
 
 export const initialCards = [
     {
@@ -65,28 +60,9 @@ newCardButton.addEventListener('click', handleClickCard);
 
 newCardFormCloseButton.addEventListener('click', handleClickCloseCard);
 
-profilePopup.addEventListener('submit', function handleProfileFormSubmit (evt) {
-    evt.preventDefault();
-    renderProfile(evt.target.name.value, evt.target.job.value);
-
-    document.querySelectorAll('.popup').forEach(closePopup);
-})
-
-newCardPopup.addEventListener('submit', function handleFormSubmitCard (evt) {
-    evt.preventDefault();
-
-    const card = new Card({
-        name: evt.target.postname.value,
-        link: evt.target.postlink.value,
-    }, '#cardTemplate').render();
-
-    cardsContainer.prepend(card);
-
-    newCardForm.reset();
-    const submitButton = newCardPopup.querySelector('.popup__btn-save');
-    submitButton.disabled = true;
-    document.querySelectorAll('.popup').forEach(closePopup);
-})
+function createCard(data) {
+    return new Card(data, '#cardTemplate', openPopup).render();
+}
 
 function handleClickCard() {
     openPopup(newCardPopup);
@@ -130,7 +106,7 @@ function renderProfileForm(name, job) {
 }
 
 initialCards.forEach(function initCard(cardItem) {
-    const card = new Card(cardItem, '#cardTemplate').render();
+    const card = createCard(cardItem);
 
     cardsContainer.append(card);
 });
@@ -150,16 +126,39 @@ popups.forEach((popup) => {
     })
 })
 
+// Валидатор проверяет форму при загрузке приложения, из-за этого заполняем форму здесь.
+// Если заполнять форму при ее открытии, то всегда будем получать disabled кнопку сохранить, что неверно так как форма может быть уже заполнена
 renderProfileForm(profileName.textContent, profileJob.textContent);
 
-new FormValidator({
+const profileFormValidator = new FormValidator({
     inputSelector: '.popup__input',
     inputErrorClass: 'popup__input_error',
     submitButtonSelector: '.popup__btn-save',
+    onSubmit: function handleProfileFormSubmit (evt) {
+        evt.preventDefault();
+        renderProfile(evt.target.name.value, evt.target.job.value);
+    
+        closePopup(profilePopup);
+    },
 }, profileEditform).enableValidation();
 
-new FormValidator({
+const cardFormValidator = new FormValidator({
     inputSelector: '.popup__input',
     inputErrorClass: 'popup__input_error',
     submitButtonSelector: '.popup__btn-save',
+    onSubmit: function handleFormSubmitCard (evt) {
+        evt.preventDefault();
+    
+        const card = createCard({
+            name: evt.target.postname.value,
+            link: evt.target.postlink.value,
+        });
+    
+        cardsContainer.prepend(card);
+    
+        newCardForm.reset();
+        const submitButton = newCardPopup.querySelector('.popup__btn-save');
+        submitButton.disabled = true;
+        document.querySelectorAll('.popup').forEach(closePopup);
+    },
 }, newCardForm).enableValidation();

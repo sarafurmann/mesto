@@ -1,7 +1,10 @@
 export class FormValidator {
     constructor(config, form) {
-        this._config = config
-        this._form = form
+        this._config = config;
+        this._form = form;
+        this._inputs = Array.from(this._form.querySelectorAll(this._config.inputSelector));
+        this._submitButton = this._form.querySelector(this._config.submitButtonSelector);
+        this._form.addEventListener('submit', config.onSubmit);
     }
 
     _setDisabledToSubmitButton(button, inputs) {
@@ -21,12 +24,9 @@ export class FormValidator {
     }
 
     enableValidation() {
-        const inputs = Array.from(this._form.querySelectorAll(this._config.inputSelector));
-        const submitButton = this._form.querySelector(this._config.submitButtonSelector);
+        this._setDisabledToSubmitButton(this._submitButton, this._inputs);
 
-        this._setDisabledToSubmitButton(submitButton, inputs);
-
-        inputs.forEach( (input) => {
+        this._inputs.forEach( (input) => {
             input.addEventListener('input', () => {
                 const errorElement = this._form.querySelector('#' + input.id + '-error');
 
@@ -36,7 +36,7 @@ export class FormValidator {
                     this._showError(input, errorElement, this._config.inputErrorClass);
                 }
 
-                this._setDisabledToSubmitButton(submitButton, inputs);
+                this._setDisabledToSubmitButton(this._submitButton, this._inputs);
             })
         })
     }

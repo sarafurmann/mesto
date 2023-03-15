@@ -1,14 +1,18 @@
 export class Card {
-  constructor(data, templateSelector) {
+  constructor(data, templateSelector, openPopup) {
     this._name = data.name
     this._link = data.link
     this._cardTemplate = document.querySelector(templateSelector).content;
+    this._zoomPopup = document.body.querySelector('#element-zoom');
     this._elementZoonImage = document.body.querySelector('.element-zoom__img');
     this._elementZoomTitle = document.body.querySelector('.element-zoom__title');
+    this._cardElement = this._cardTemplate.querySelector('.elements__item').cloneNode(true);
+    this._cardImage = this._cardElement.querySelector('.elements__img');
+    this._openPopup = openPopup;
   }
 
-  _openHandler = () => {
-    openPopup(zoomPopup);
+  _handleZoom() {
+    this._openPopup(this._zoomPopup);
 
     this._elementZoomTitle.textContent = this._name;
     this._elementZoonImage.src = this._link;
@@ -16,8 +20,7 @@ export class Card {
   }
 
   _deleteCard(evt) {
-    const card = evt.target.closest('.elements__item');
-    card.remove();
+    this._cardElement.remove();
   }
 
   _likedHandler(event) {
@@ -25,23 +28,20 @@ export class Card {
   }
 
   render() {
-    const cardElement = this._cardTemplate.querySelector('.elements__item').cloneNode(true);
-    const cardImage = cardElement.querySelector('.elements__img');
+    this._cardImage.src = this._link;
+    this._cardElement.querySelector('.elements__title').textContent = this._name;
+    this._cardImage.alt = this._name;
 
-    cardImage.src = this._link;
-    cardElement.querySelector('.elements__title').textContent = this._name;
-    cardImage.alt = this._name;
+    const cardInfoButton = this._cardElement.querySelector('.elements__info-btn');
 
-    const cardInfoButton = cardElement.querySelector('.elements__info-btn');
+    cardInfoButton.addEventListener('click', () => this._likedHandler());
 
-    cardInfoButton.addEventListener('click', this._likedHandler);
+    const cardDelete = this._cardElement.querySelector('.elements__delete-btn');
 
-    const cardDelete = cardElement.querySelector('.elements__delete-btn');
+    cardDelete.addEventListener('click', () => this._deleteCard());
 
-    cardDelete.addEventListener('click', this._deleteCard);
+    this._cardImage.addEventListener('click', () => this._handleZoom());
 
-    cardImage.addEventListener('click', this._openHandler);
-
-    return cardElement;
+    return this._cardElement;
   }
 }
