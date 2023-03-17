@@ -24,7 +24,7 @@ export class Card {
   }
 
   _likedHandler(event) {
-    event.target.classList.toggle('elements__info-btn_liked');
+    this._cardInfoButton.classList.toggle('elements__info-btn_liked');
   }
 
   render() {
@@ -32,9 +32,9 @@ export class Card {
     this._cardElement.querySelector('.elements__title').textContent = this._name;
     this._cardImage.alt = this._name;
 
-    const cardInfoButton = this._cardElement.querySelector('.elements__info-btn');
+    this._cardInfoButton = this._cardElement.querySelector('.elements__info-btn'); 
 
-    cardInfoButton.addEventListener('click', () => this._likedHandler());
+    this._cardInfoButton.addEventListener('click', () => this._likedHandler());
 
     const cardDelete = this._cardElement.querySelector('.elements__delete-btn');
 

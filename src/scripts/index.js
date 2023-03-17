@@ -52,13 +52,13 @@ export const initialCards = [
 
 profileInfoButton.addEventListener('click', handleClick);
 
-profileEditformCloseButton.addEventListener('click', handleClickClose);
+profileEditformCloseButton.addEventListener('click', () => closePopup(profilePopup));
 
-zoomPopupCloseBtn.addEventListener('click', handleClose);
+zoomPopupCloseBtn.addEventListener('click', () => closePopup(zoomPopup));
 
 newCardButton.addEventListener('click', handleClickCard);
 
-newCardFormCloseButton.addEventListener('click', handleClickCloseCard);
+newCardFormCloseButton.addEventListener('click', () => closePopup(newCardPopup));
 
 function createCard(data) {
     return new Card(data, '#cardTemplate', openPopup).render();
@@ -66,14 +66,6 @@ function createCard(data) {
 
 function handleClickCard() {
     openPopup(newCardPopup);
-}
-
-function handleClickCloseCard() {
-    document.querySelectorAll('.popup').forEach(closePopup);
-}
-
-function handleClose() {
-    document.querySelectorAll('.popup').forEach(closePopup);
 }
 
 function openPopup(popup) {
@@ -89,10 +81,6 @@ function closePopup(popup) {
 function handleClick() {
     renderProfileForm(profileName.textContent, profileJob.textContent);
     openPopup(profilePopup);
-}
-
-function handleClickClose() {
-    document.querySelectorAll('.popup').forEach(closePopup);
 }
 
 function renderProfile(name, job) {
@@ -126,39 +114,39 @@ popups.forEach((popup) => {
     })
 })
 
-// Валидатор проверяет форму при загрузке приложения, из-за этого заполняем форму здесь.
-// Если заполнять форму при ее открытии, то всегда будем получать disabled кнопку сохранить, что неверно так как форма может быть уже заполнена
-renderProfileForm(profileName.textContent, profileJob.textContent);
+profilePopup.addEventListener('submit', handleProfileFormSubmit);
+
+function handleProfileFormSubmit (evt) {
+    evt.preventDefault();
+    renderProfile(evt.target.name.value, evt.target.job.value);
+
+    closePopup(profilePopup);
+}
+
+newCardForm.addEventListener('submit', handleFormSubmitCard);
+
+function handleFormSubmitCard (evt) {
+    evt.preventDefault();
+
+    const card = createCard({
+        name: evt.target.postname.value,
+        link: evt.target.postlink.value,
+    });
+
+    cardsContainer.prepend(card);
+
+    newCardForm.reset();
+    closePopup(newCardPopup);
+}
 
 const profileFormValidator = new FormValidator({
     inputSelector: '.popup__input',
     inputErrorClass: 'popup__input_error',
     submitButtonSelector: '.popup__btn-save',
-    onSubmit: function handleProfileFormSubmit (evt) {
-        evt.preventDefault();
-        renderProfile(evt.target.name.value, evt.target.job.value);
-    
-        closePopup(profilePopup);
-    },
 }, profileEditform).enableValidation();
 
 const cardFormValidator = new FormValidator({
     inputSelector: '.popup__input',
     inputErrorClass: 'popup__input_error',
     submitButtonSelector: '.popup__btn-save',
-    onSubmit: function handleFormSubmitCard (evt) {
-        evt.preventDefault();
-    
-        const card = createCard({
-            name: evt.target.postname.value,
-            link: evt.target.postlink.value,
-        });
-    
-        cardsContainer.prepend(card);
-    
-        newCardForm.reset();
-        const submitButton = newCardPopup.querySelector('.popup__btn-save');
-        submitButton.disabled = true;
-        document.querySelectorAll('.popup').forEach(closePopup);
-    },
 }, newCardForm).enableValidation();
