@@ -6,7 +6,7 @@ export class FormValidator {
         this._submitButton = this._form.querySelector(this._config.submitButtonSelector);
     }
 
-    _setDisabledToSubmitButton() {
+    setDisabledToSubmitButton() {
         this._submitButton.disabled = this._inputs.some(function (input) {
             return !input.checkValidity();
         });
@@ -23,7 +23,7 @@ export class FormValidator {
     }
 
     enableValidation() {
-        this._setDisabledToSubmitButton();
+        this.setDisabledToSubmitButton();
 
         this._inputs.forEach((input) => {
             input.addEventListener('input', () => {
@@ -35,7 +35,7 @@ export class FormValidator {
                     this._showError(input, errorElement);
                 }
 
-                this._setDisabledToSubmitButton();
+                this.setDisabledToSubmitButton();
             })
         })
     }

@@ -49,6 +49,20 @@ export const initialCards = [
     }
 ];
 
+const profileFormValidator = new FormValidator({
+    inputSelector: '.popup__input',
+    inputErrorClass: 'popup__input_error',
+    submitButtonSelector: '.popup__btn-save',
+}, profileEditform);
+profileFormValidator.enableValidation();
+
+const cardFormValidator = new FormValidator({
+    inputSelector: '.popup__input',
+    inputErrorClass: 'popup__input_error',
+    submitButtonSelector: '.popup__btn-save',
+}, newCardForm);
+cardFormValidator.enableValidation();
+
 
 profileInfoButton.addEventListener('click', handleClick);
 
@@ -65,6 +79,7 @@ function createCard(data) {
 }
 
 function handleClickCard() {
+    cardFormValidator.setDisabledToSubmitButton();
     openPopup(newCardPopup);
 }
 
@@ -80,6 +95,7 @@ function closePopup(popup) {
 
 function handleClick() {
     renderProfileForm(profileName.textContent, profileJob.textContent);
+    profileFormValidator.setDisabledToSubmitButton();
     openPopup(profilePopup);
 }
 
@@ -138,17 +154,3 @@ function handleFormSubmitCard (evt) {
     newCardForm.reset();
     closePopup(newCardPopup);
 }
-
-const profileFormValidator = new FormValidator({
-    inputSelector: '.popup__input',
-    inputErrorClass: 'popup__input_error',
-    submitButtonSelector: '.popup__btn-save',
-}, profileEditform);
-profileFormValidator.enableValidation();
-
-const cardFormValidator = new FormValidator({
-    inputSelector: '.popup__input',
-    inputErrorClass: 'popup__input_error',
-    submitButtonSelector: '.popup__btn-save',
-}, newCardForm);
-cardFormValidator.enableValidation();
