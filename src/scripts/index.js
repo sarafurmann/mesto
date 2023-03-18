@@ -143,10 +143,12 @@ const profileFormValidator = new FormValidator({
     inputSelector: '.popup__input',
     inputErrorClass: 'popup__input_error',
     submitButtonSelector: '.popup__btn-save',
-}, profileEditform).enableValidation();
+}, profileEditform);
+profileFormValidator.enableValidation();
 
 const cardFormValidator = new FormValidator({
     inputSelector: '.popup__input',
     inputErrorClass: 'popup__input_error',
     submitButtonSelector: '.popup__btn-save',
-}, newCardForm).enableValidation();
+}, newCardForm);
+cardFormValidator.enableValidation();

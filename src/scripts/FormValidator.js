@@ -38,9 +38,5 @@ export class FormValidator {
                 this._setDisabledToSubmitButton();
             })
         })
-
-        this._form.addEventListener('submit', () => {
-            this._setDisabledToSubmitButton();
-        });
     }
 }
