@@ -1,10 +1,10 @@
-import './pages/index.css'
-import { Card } from './scripts/Card.js'
-import { FormValidator } from './scripts/FormValidator.js'
-import { Section } from './scripts/Section.js';
-import { UserInfo } from './scripts/UserInfo.js';
-import { PopupWithImage } from './scripts/PopupWithImage.js';
-import { PopupWithForm } from './scripts/PopupWithForm.js';
+import './index.css'
+import { Card } from '../scripts/components/Card.js'
+import { FormValidator } from '../scripts/components/FormValidator.js'
+import { Section } from '../scripts/components/Section.js';
+import { UserInfo } from '../scripts/components/UserInfo.js';
+import { PopupWithImage } from '../scripts/components/PopupWithImage.js';
+import { PopupWithForm } from '../scripts/components/PopupWithForm.js';
 
 const profileInfoButton = document.body.querySelector('.profile__info-button');
 const profilePopup= document.body.querySelector('#editform');
@@ -79,31 +79,13 @@ function createCard(data) {
     return new Card(data, '#cardTemplate', imagePopup.open.bind(imagePopup)).render();
 }
 
-function openPopup(popup) {
-    popup.classList.add('popup_opened');
-    document.addEventListener('keydown', closeEscape)
-} 
-
-function closePopup(popup) {
-    popup.classList.remove('popup_opened');
-    document.removeEventListener('keydown', closeEscape)
-}
-
 function renderProfileForm(name, job) {
     profileNameAbout.value = name;
     profileJobPlace.value = job;
 }
 
-function closeEscape(evt) {
-    const key = evt.key;
-    if (key === 'Escape') {
-        closePopup(document.querySelector('.popup_opened'));        
-    }
-}
-
-const profileFormPopup = new PopupWithForm('#editform', function handleProfileFormSubmit (evt) {
-    evt.preventDefault();
-    userInfo.setUserInfo(evt.target.name.value, evt.target.job.value);
+const profileFormPopup = new PopupWithForm('#editform', function handleProfileFormSubmit (data) {
+    userInfo.setUserInfo(data.name, data.job);
 
     profileFormPopup.close()
 })
@@ -114,12 +96,10 @@ profileInfoButton.addEventListener('click', function handleClick() {
 });
 profileFormPopup.setEventListeners();
 
-const newCardFormPopup = new PopupWithForm('#newpost', function handleFormSubmitCard (evt) {
-    evt.preventDefault();
-
+const newCardFormPopup = new PopupWithForm('#newpost', function handleFormSubmitCard (data) {
     const card = createCard({
-        name: evt.target.postname.value,
-        link: evt.target.postlink.value,
+        name: data.postname,
+        link: data.postlink,
     });
 
     section.addItem(card);
