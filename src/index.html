@@ -52,6 +52,18 @@
         </div>
     </div>
 
+    <div class="popup" id='popup__avatar'>
+        <div class="popup__container">
+            <form class="popup__form" name="avatarForm" id="popup-form-avatar" action="#" novalidate>
+                <h2 class="popup__title">Обновить аватар</h2>
+                <input class="popup__input" id="avatar" type="url" name="avatar" placeholder="Ссылка на аватар" minlength="2" required>
+                <span id="avatar-error" class="popup__input-error popup-input-link-error"></span>
+                <button class="popup__btn-save" type="submit" title="Создать">Сохранить</button>
+                <button type="button" aria-label="Кнопка закрыть" class="popup__btn-close "></button>
+            </form>
+        </div>
+    </div>
+
 
     <div class="popup" id="newpost">
         <div class="popup__container">
@@ -72,6 +84,16 @@
         </div>
     </div>
 
+    <div class="popup" id="popup__confirm">
+        <div class="popup__container">
+            <form class="popup__form" name="confirm" novalidate>
+                <h2 class="popup__title">Вы уверены?</h2>
+                <button class="popup__btn-save popup__btn-confirm" type="submit" title="Подтвердить">Да</button>
+                <button type="button" aria-label="Кнопка закрыть" class="popup__btn-close"></button>
+            </form>
+        </div>
+    </div>
+
     <div class="popup element-zoom" id="element-zoom">
         <figure class="element-zoom__container">
             <img class="element-zoom__img">
@@ -85,7 +107,10 @@
             <img alt="Карачаевск" class="elements__img">
             <div class="elements__info">
                 <h2 class="elements__title"></h2>
-                <button type="button" class="elements__info-btn" aria-label="Лайк"></button>
+                <div class="elements__like">
+                    <button type="button" class="elements__info-btn" aria-label="Лайк"></button>
+                    <p class="elements__number-like">0</p>
+                </div>
             </div>
             <button type="button" class="elements__delete-btn"></button>
         </li>

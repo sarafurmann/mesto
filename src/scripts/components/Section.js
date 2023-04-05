@@ -9,6 +9,10 @@ export class Section {
         this._container.prepend(item)
     }
 
+    setItems(items) {
+        this._items = items;
+    }
+
     render() {
         this._items.forEach((item) => {
             this._container.append(
