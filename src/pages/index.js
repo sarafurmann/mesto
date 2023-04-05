@@ -75,7 +75,7 @@ function createCard(data) {
                 api.deleteCard(id).then(onDelete)
                 confirmDeletionFormPopup.close()
             })
-            confirmDeletionFormPopup.setEventListeners()
+            confirmDeletionFormPopup.setEventListeners(true)
             confirmDeletionFormPopup.open()
         },
         (id, isLiked, onLiked) => {
@@ -97,7 +97,8 @@ const profileFormPopup = new PopupWithForm('#editform', function handleProfileFo
     api.editUser(data.name, data.job).then(() => {
         userInfo.setUserInfo(data.name, data.job);
 
-        profileFormPopup.close()
+        profileFormPopup.resetText();
+        profileFormPopup.close();
     })
     
 })
@@ -112,6 +113,7 @@ const editAvatarFormPopup = new PopupWithForm('#popup__avatar', function handleA
     api.editUserAvatar(data.avatar).then(() => {
         userInfo.setUserAvatar(data.avatar);
 
+        editAvatarFormPopup.resetText();
         editAvatarFormPopup.close();
     })
 })
@@ -134,7 +136,8 @@ const newCardFormPopup = new PopupWithForm('#newpost', function handleFormSubmit
     
         section.addItem(card);
     
-        newCardFormPopup.close()
+        newCardFormPopup.resetText();
+        newCardFormPopup.close();
     })
     
 });
