@@ -69,6 +69,7 @@ function createCard(data) {
         '#cardTemplate',
         imagePopup.open.bind(imagePopup),
         (id, onDelete) => {
+            // не получается создать один попап на верхнем уровне, так как в фукции для сабмита формы используются id и onDelete, которые доступны только тут
             const confirmDeletionFormPopup = new PopupWithForm('#popup__confirm', () => {
                 api.deleteCard(id).then(() => {
                     onDelete()
