@@ -27,19 +27,19 @@ export class PopupWithForm extends Popup {
         }
     }
 
-    setEventListeners(clear) {
+    setEventListeners(clear = false, loadingText = 'Сохраняется...') {
         super.setEventListeners();
         this._clear = clear
         const onSubmit = (e) => {
             e.preventDefault();
-            
-            this._submitButton.textContent = 'Сохраняется...'
-            this._onSubmit(this._getInputValues())
+
+            this._submitButton.textContent = loadingText;
+            this._onSubmit(this._getInputValues());
         }
-        this._form.addEventListener('submit', onSubmit)
+        this._form.addEventListener('submit', onSubmit);
 
         this._removeEventListeners = () => {
-            this._form.removeEventListener('submit', onSubmit)
+            this._form.removeEventListener('submit', onSubmit);
         }
     }
 
